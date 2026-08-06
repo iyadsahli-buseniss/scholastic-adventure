@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { motion } from "motion/react";
-import { getLesson } from "@/data/curriculum";
+import { getLesson, type Subject, type Lesson } from "@/data/curriculum";
 import { Reveal } from "@/components/Motion";
 import { SiteHeader, SiteFooter } from "@/components/Chrome";
 
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/mawad/$subject/$lesson")({
 });
 
 function LessonPage() {
-  const { subject, lesson } = Route.useLoaderData();
+  const { subject, lesson } = Route.useLoaderData() as { subject: Subject; lesson: Lesson };
 
   return (
     <div dir="rtl" className="min-h-screen">

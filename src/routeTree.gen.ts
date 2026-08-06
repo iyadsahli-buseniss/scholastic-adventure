@@ -10,33 +10,68 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MawadIndexRouteImport } from './routes/mawad.index'
+import { Route as MawadSubjectIndexRouteImport } from './routes/mawad.$subject.index'
+import { Route as MawadSubjectLessonRouteImport } from './routes/mawad.$subject.$lesson'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MawadIndexRoute = MawadIndexRouteImport.update({
+  id: '/mawad/',
+  path: '/mawad/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MawadSubjectIndexRoute = MawadSubjectIndexRouteImport.update({
+  id: '/mawad/$subject/',
+  path: '/mawad/$subject/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MawadSubjectLessonRoute = MawadSubjectLessonRouteImport.update({
+  id: '/mawad/$subject/$lesson',
+  path: '/mawad/$subject/$lesson',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/mawad/': typeof MawadIndexRoute
+  '/mawad/$subject/$lesson': typeof MawadSubjectLessonRoute
+  '/mawad/$subject/': typeof MawadSubjectIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/mawad': typeof MawadIndexRoute
+  '/mawad/$subject/$lesson': typeof MawadSubjectLessonRoute
+  '/mawad/$subject': typeof MawadSubjectIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/mawad/': typeof MawadIndexRoute
+  '/mawad/$subject/$lesson': typeof MawadSubjectLessonRoute
+  '/mawad/$subject/': typeof MawadSubjectIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/mawad/' | '/mawad/$subject/$lesson' | '/mawad/$subject/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/mawad' | '/mawad/$subject/$lesson' | '/mawad/$subject'
+  id:
+    | '__root__'
+    | '/'
+    | '/mawad/'
+    | '/mawad/$subject/$lesson'
+    | '/mawad/$subject/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MawadIndexRoute: typeof MawadIndexRoute
+  MawadSubjectLessonRoute: typeof MawadSubjectLessonRoute
+  MawadSubjectIndexRoute: typeof MawadSubjectIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +83,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mawad/': {
+      id: '/mawad/'
+      path: '/mawad'
+      fullPath: '/mawad/'
+      preLoaderRoute: typeof MawadIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mawad/$subject/': {
+      id: '/mawad/$subject/'
+      path: '/mawad/$subject'
+      fullPath: '/mawad/$subject/'
+      preLoaderRoute: typeof MawadSubjectIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mawad/$subject/$lesson': {
+      id: '/mawad/$subject/$lesson'
+      path: '/mawad/$subject/$lesson'
+      fullPath: '/mawad/$subject/$lesson'
+      preLoaderRoute: typeof MawadSubjectLessonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MawadIndexRoute: MawadIndexRoute,
+  MawadSubjectLessonRoute: MawadSubjectLessonRoute,
+  MawadSubjectIndexRoute: MawadSubjectIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

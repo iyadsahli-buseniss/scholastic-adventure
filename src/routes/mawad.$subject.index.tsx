@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { getSubject } from "@/data/curriculum";
+import { getSubject, type Subject } from "@/data/curriculum";
 import { Reveal } from "@/components/Motion";
 import { SiteHeader, SiteFooter } from "@/components/Chrome";
 
@@ -31,9 +31,9 @@ export const Route = createFileRoute("/mawad/$subject/")({
 });
 
 function SubjectPage() {
-  const { subject } = Route.useLoaderData();
+  const { subject } = Route.useLoaderData() as { subject: Subject };
 
-  const units = Array.from(new Set(subject.lessons.map((l) => l.unit)));
+  const units: string[] = Array.from(new Set(subject.lessons.map((l) => l.unit)));
 
   return (
     <div dir="rtl" className="min-h-screen">
