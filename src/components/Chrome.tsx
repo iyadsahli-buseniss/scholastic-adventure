@@ -19,6 +19,13 @@ export function SiteHeader() {
           >
             المواد
           </Link>
+          <Link
+            to="/khizana"
+            className="underline-sweep text-muted-foreground hover:text-foreground"
+          >
+            خزانة PDF
+          </Link>
+
         </nav>
       </div>
     </header>

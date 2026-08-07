@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MawadIndexRouteImport } from './routes/mawad.index'
+import { Route as ApiPublicPdfRouteImport } from './routes/api/public/pdf'
 import { Route as MawadSubjectIndexRouteImport } from './routes/mawad.$subject.index'
 import { Route as MawadSubjectLessonRouteImport } from './routes/mawad.$subject.$lesson'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const MawadIndexRoute = MawadIndexRouteImport.update({
   id: '/mawad/',
   path: '/mawad/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicPdfRoute = ApiPublicPdfRouteImport.update({
+  id: '/api/public/pdf',
+  path: '/api/public/pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MawadSubjectIndexRoute = MawadSubjectIndexRouteImport.update({
@@ -38,12 +44,14 @@ const MawadSubjectLessonRoute = MawadSubjectLessonRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/mawad/': typeof MawadIndexRoute
+  '/api/public/pdf': typeof ApiPublicPdfRoute
   '/mawad/$subject/$lesson': typeof MawadSubjectLessonRoute
   '/mawad/$subject/': typeof MawadSubjectIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/mawad': typeof MawadIndexRoute
+  '/api/public/pdf': typeof ApiPublicPdfRoute
   '/mawad/$subject/$lesson': typeof MawadSubjectLessonRoute
   '/mawad/$subject': typeof MawadSubjectIndexRoute
 }
@@ -51,18 +59,30 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/mawad/': typeof MawadIndexRoute
+  '/api/public/pdf': typeof ApiPublicPdfRoute
   '/mawad/$subject/$lesson': typeof MawadSubjectLessonRoute
   '/mawad/$subject/': typeof MawadSubjectIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/mawad/' | '/mawad/$subject/$lesson' | '/mawad/$subject/'
+  fullPaths:
+    | '/'
+    | '/mawad/'
+    | '/api/public/pdf'
+    | '/mawad/$subject/$lesson'
+    | '/mawad/$subject/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/mawad' | '/mawad/$subject/$lesson' | '/mawad/$subject'
+  to:
+    | '/'
+    | '/mawad'
+    | '/api/public/pdf'
+    | '/mawad/$subject/$lesson'
+    | '/mawad/$subject'
   id:
     | '__root__'
     | '/'
     | '/mawad/'
+    | '/api/public/pdf'
     | '/mawad/$subject/$lesson'
     | '/mawad/$subject/'
   fileRoutesById: FileRoutesById
@@ -70,6 +90,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MawadIndexRoute: typeof MawadIndexRoute
+  ApiPublicPdfRoute: typeof ApiPublicPdfRoute
   MawadSubjectLessonRoute: typeof MawadSubjectLessonRoute
   MawadSubjectIndexRoute: typeof MawadSubjectIndexRoute
 }
@@ -88,6 +109,13 @@ declare module '@tanstack/react-router' {
       path: '/mawad'
       fullPath: '/mawad/'
       preLoaderRoute: typeof MawadIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/pdf': {
+      id: '/api/public/pdf'
+      path: '/api/public/pdf'
+      fullPath: '/api/public/pdf'
+      preLoaderRoute: typeof ApiPublicPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mawad/$subject/': {
@@ -110,19 +138,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MawadIndexRoute: MawadIndexRoute,
+  ApiPublicPdfRoute: ApiPublicPdfRoute,
   MawadSubjectLessonRoute: MawadSubjectLessonRoute,
   MawadSubjectIndexRoute: MawadSubjectIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
