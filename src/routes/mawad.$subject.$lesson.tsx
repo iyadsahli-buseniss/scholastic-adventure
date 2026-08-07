@@ -37,6 +37,9 @@ export const Route = createFileRoute("/mawad/$subject/$lesson")({
 
 function LessonPage() {
   const { subject, lesson } = Route.useLoaderData() as { subject: Subject; lesson: Lesson };
+  const quiz = getQuiz(subject.slug, lesson.slug);
+
+
 
   return (
     <div dir="rtl" className="min-h-screen">
@@ -141,6 +144,26 @@ function LessonPage() {
             </div>
           </div>
         </Reveal>
+
+        <Reveal delay={0.1}>
+          <Quiz questions={quiz} />
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <Link
+            to="/khizana"
+            className="surface-card mt-8 flex items-center justify-between gap-4 rounded-2xl p-5 transition-colors hover:border-accent"
+          >
+            <span>
+              <span className="block text-sm font-bold">وثائق PDF لهذا المستوى</span>
+              <span className="mt-1 block text-xs text-muted-foreground">
+                دروس وملخصات وتمارين إضافية قابلة للقراءة والتحميل
+              </span>
+            </span>
+            <span className="text-accent">←</span>
+          </Link>
+        </Reveal>
+
       </main>
       <SiteFooter />
     </div>
