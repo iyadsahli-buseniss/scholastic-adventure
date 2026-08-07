@@ -14,7 +14,7 @@ export function Quiz({ questions }: { questions: Question[] }) {
   function choose(i: number) {
     if (picked !== null) return;
     setPicked(i);
-    if (i === q.answer) setScore((s) => s + 1);
+    if (i === questions[index]?.answer) setScore((s) => s + 1);
   }
 
   function next() {
