@@ -33,11 +33,20 @@ export function PdfViewer({ doc, onClose }: { doc: ViewerDoc | null; onClose: ()
             <div className="flex shrink-0 items-center gap-2">
               <a
                 href={pdfViewerUrl(doc.url)}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full border border-border px-4 py-1.5 text-xs transition-colors hover:border-accent hover:text-accent"
+              >
+                نافذة جديدة
+              </a>
+              <a
+                href={pdfViewerUrl(doc.url)}
                 download
                 className="rounded-full border border-border px-4 py-1.5 text-xs transition-colors hover:border-accent hover:text-accent"
               >
                 تحميل
               </a>
+
               <button
                 onClick={onClose}
                 className="rounded-full bg-accent px-4 py-1.5 text-xs font-bold text-accent-foreground"
