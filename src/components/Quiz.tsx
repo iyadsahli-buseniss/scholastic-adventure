@@ -8,8 +8,8 @@ export function Quiz({ questions }: { questions: Question[] }) {
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
 
-  if (questions.length === 0) return null;
   const q = questions[index];
+  if (!q) return null;
 
   function choose(i: number) {
     if (picked !== null) return;
@@ -107,7 +107,7 @@ export function Quiz({ questions }: { questions: Question[] }) {
                   <motion.button
                     key={c}
                     onClick={() => choose(i)}
-                    whileHover={picked === null ? { x: -4 } : undefined}
+                    whileHover={picked === null ? { x: -4 } : {}}
                     className={`flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-right text-sm transition-colors ${
                       state === "correct"
                         ? "border-accent bg-accent/15 text-accent"
