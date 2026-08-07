@@ -1,8 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { getLesson, type Subject, type Lesson } from "@/data/curriculum";
+import { getQuiz } from "@/data/quizzes";
+import { Quiz } from "@/components/Quiz";
 import { Reveal } from "@/components/Motion";
 import { SiteHeader, SiteFooter } from "@/components/Chrome";
+
 
 export const Route = createFileRoute("/mawad/$subject/$lesson")({
   loader: ({ params }) => {
