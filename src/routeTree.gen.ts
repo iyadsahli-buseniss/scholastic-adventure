@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as KhizanaIndexRouteImport } from './routes/khizana.index'
 import { Route as MawadIndexRouteImport } from './routes/mawad.index'
 import { Route as ApiPublicPdfRouteImport } from './routes/api/public/pdf'
 import { Route as MawadSubjectIndexRouteImport } from './routes/mawad.$subject.index'
@@ -18,6 +19,11 @@ import { Route as MawadSubjectLessonRouteImport } from './routes/mawad.$subject.
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KhizanaIndexRoute = KhizanaIndexRouteImport.update({
+  id: '/khizana/',
+  path: '/khizana/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MawadIndexRoute = MawadIndexRouteImport.update({
@@ -43,6 +49,7 @@ const MawadSubjectLessonRoute = MawadSubjectLessonRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/khizana/': typeof KhizanaIndexRoute
   '/mawad/': typeof MawadIndexRoute
   '/api/public/pdf': typeof ApiPublicPdfRoute
   '/mawad/$subject/$lesson': typeof MawadSubjectLessonRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/khizana': typeof KhizanaIndexRoute
   '/mawad': typeof MawadIndexRoute
   '/api/public/pdf': typeof ApiPublicPdfRoute
   '/mawad/$subject/$lesson': typeof MawadSubjectLessonRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/khizana/': typeof KhizanaIndexRoute
   '/mawad/': typeof MawadIndexRoute
   '/api/public/pdf': typeof ApiPublicPdfRoute
   '/mawad/$subject/$lesson': typeof MawadSubjectLessonRoute
@@ -67,6 +76,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/khizana/'
     | '/mawad/'
     | '/api/public/pdf'
     | '/mawad/$subject/$lesson'
@@ -74,6 +84,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/khizana'
     | '/mawad'
     | '/api/public/pdf'
     | '/mawad/$subject/$lesson'
@@ -81,6 +92,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/khizana/'
     | '/mawad/'
     | '/api/public/pdf'
     | '/mawad/$subject/$lesson'
@@ -89,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  KhizanaIndexRoute: typeof KhizanaIndexRoute
   MawadIndexRoute: typeof MawadIndexRoute
   ApiPublicPdfRoute: typeof ApiPublicPdfRoute
   MawadSubjectLessonRoute: typeof MawadSubjectLessonRoute
@@ -102,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/khizana/': {
+      id: '/khizana/'
+      path: '/khizana'
+      fullPath: '/khizana/'
+      preLoaderRoute: typeof KhizanaIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mawad/': {
@@ -137,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  KhizanaIndexRoute: KhizanaIndexRoute,
   MawadIndexRoute: MawadIndexRoute,
   ApiPublicPdfRoute: ApiPublicPdfRoute,
   MawadSubjectLessonRoute: MawadSubjectLessonRoute,
