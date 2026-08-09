@@ -60,6 +60,9 @@ export function AuroraField() {
 
 /** Floating gold motes. */
 export function ParticleField({ count = 26 }: { count?: number }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
       {Array.from({ length: count }).map((_, i) => {
