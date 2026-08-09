@@ -107,7 +107,9 @@ function Home() {
             ].map((s, i) => (
               <Reveal key={s.l} delay={i * 0.1}>
                 <div className="surface-card rounded-2xl px-4 py-6">
-                  <div className="text-3xl font-black text-gold-gradient sm:text-4xl">{s.n}+</div>
+                  <div className="text-3xl font-black text-gold-gradient sm:text-4xl">
+                    <CountUp to={s.n} suffix="+" />
+                  </div>
                   <div className="mt-1 text-xs text-muted-foreground sm:text-sm">{s.l}</div>
                 </div>
               </Reveal>
@@ -116,7 +118,11 @@ function Home() {
         </div>
       </section>
 
-      <section id="mawad" className="mx-auto max-w-6xl px-5 py-20">
+      <div className="border-y border-border/60 bg-surface/40">
+        <Marquee items={subjects.map((s) => s.name)} />
+      </div>
+
+      <section id="mawad" className="relative mx-auto max-w-6xl px-5 py-20">
         <Reveal>
           <h2 className="text-3xl font-black sm:text-4xl">المواد الدراسية</h2>
           <p className="mt-2 text-muted-foreground">اختر مادة لتصفح جميع دروسها.</p>
@@ -125,22 +131,24 @@ function Home() {
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {subjects.map((s, i) => (
             <Reveal key={s.slug} delay={i * 0.06}>
-              <Link
-                to="/mawad/$subject"
-                params={{ subject: s.slug }}
-                className="surface-card lift group flex h-full flex-col rounded-3xl p-6"
-              >
-                <div className="flex items-start justify-between">
-                  <h3 className="text-xl font-bold group-hover:text-accent">{s.name}</h3>
-                  <span className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
-                    {s.lessons.length} دروس
-                  </span>
-                </div>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-                  {s.tagline}
-                </p>
-                <span className="mt-5 text-xs tracking-widest text-accent/80">{s.latin}</span>
-              </Link>
+              <TiltCard className="h-full">
+                <Link
+                  to="/mawad/$subject"
+                  params={{ subject: s.slug }}
+                  className="surface-card lift group flex h-full flex-col rounded-3xl p-6"
+                >
+                  <div className="flex items-start justify-between">
+                    <h3 className="text-xl font-bold group-hover:text-accent">{s.name}</h3>
+                    <span className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
+                      {s.lessons.length} دروس
+                    </span>
+                  </div>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+                    {s.tagline}
+                  </p>
+                  <span className="mt-5 text-xs tracking-widest text-accent/80">{s.latin}</span>
+                </Link>
+              </TiltCard>
             </Reveal>
           ))}
         </div>
