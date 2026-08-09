@@ -63,17 +63,17 @@ export function ParticleField({ count = 26 }: { count?: number }) {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
       {Array.from({ length: count }).map((_, i) => {
-        const left = seeded(i, 1) * 100;
-        const top = seeded(i, 2) * 100;
-        const size = 2 + seeded(i, 3) * 4;
-        const dur = 9 + seeded(i, 4) * 12;
+        const left = Math.round(seeded(i, 1) * 1000) / 10;
+        const top = Math.round(seeded(i, 2) * 1000) / 10;
+        const size = Math.round((2 + seeded(i, 3) * 4) * 10) / 10;
+        const dur = Math.round((9 + seeded(i, 4) * 12) * 10) / 10;
         return (
           <motion.span
             key={i}
             className="absolute rounded-full bg-accent"
-            style={{ left: `${left}%`, top: `${top}%`, width: size, height: size, opacity: 0.35 }}
-            animate={{ y: [0, -70 - seeded(i, 5) * 60, 0], opacity: [0, 0.6, 0] }}
-            transition={{ duration: dur, delay: seeded(i, 6) * 8, repeat: Infinity, ease: "easeInOut" }}
+            style={{ left: `${left}%`, top: `${top}%`, width: `${size}px`, height: `${size}px`, opacity: 0.35 }}
+            animate={{ y: [0, -70 - Math.round(seeded(i, 5) * 60), 0], opacity: [0, 0.6, 0] }}
+            transition={{ duration: dur, delay: Math.round(seeded(i, 6) * 80) / 10, repeat: Infinity, ease: "easeInOut" }}
           />
         );
       })}
@@ -85,7 +85,7 @@ export function ParticleField({ count = 26 }: { count?: number }) {
 export function ZelligeDraw({ className = "" }: { className?: string }) {
   const pts = Array.from({ length: 8 }).map((_, i) => {
     const a = (i * Math.PI) / 4;
-    return [200 + 130 * Math.cos(a), 200 + 130 * Math.sin(a)] as const;
+    return [Math.round((200 + 130 * Math.cos(a)) * 100) / 100, Math.round((200 + 130 * Math.sin(a)) * 100) / 100] as const;
   });
   return (
     <svg viewBox="0 0 400 400" aria-hidden className={className}>
