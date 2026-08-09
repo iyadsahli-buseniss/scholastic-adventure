@@ -128,10 +128,9 @@ export function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
 
   useEffect(() => rounded.on("change", setText), [rounded]);
   useEffect(() => {
-    if (inView) {
-      const c = animate(mv, to, { duration: 1.4, ease: [0.22, 1, 0.36, 1] });
-      return () => c.stop();
-    }
+    if (!inView) return;
+    const c = animate(mv, to, { duration: 1.4, ease: [0.22, 1, 0.36, 1] });
+    return () => c.stop();
   }, [inView, to, mv]);
 
   return (
