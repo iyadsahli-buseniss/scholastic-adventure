@@ -3,6 +3,15 @@ import { motion } from "motion/react";
 import { subjects, totalLessons } from "@/data/curriculum";
 import { Logo } from "@/components/Logo";
 import { Reveal, ZelligeOrnament } from "@/components/Motion";
+import {
+  ScrollProgress,
+  AuroraField,
+  ParticleField,
+  ZelligeDraw,
+  CountUp,
+  TiltCard,
+  Marquee,
+} from "@/components/MotionFX";
 import { SiteHeader, SiteFooter } from "@/components/Chrome";
 
 export const Route = createFileRoute("/")({
