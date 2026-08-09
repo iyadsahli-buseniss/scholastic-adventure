@@ -38,14 +38,19 @@ export const Route = createFileRoute("/")({
 function Home() {
   return (
     <div dir="rtl" className="min-h-screen">
+      <ScrollProgress />
       <SiteHeader />
 
       <section className="hero-bg relative overflow-hidden">
+        <AuroraField />
         <div className="zellige-grid absolute inset-0" />
+        <ParticleField />
         <div className="absolute left-1/2 top-10 flex -translate-x-1/2 justify-center">
           <ZelligeOrnament />
         </div>
+        <ZelligeDraw className="pointer-events-none absolute left-1/2 top-4 h-[30rem] w-[30rem] -translate-x-1/2 opacity-40" />
         <div className="relative mx-auto max-w-5xl px-5 py-24 text-center">
+
           <motion.div
             className="mx-auto mb-8 w-fit"
             initial={{ opacity: 0, scale: 0.7 }}
