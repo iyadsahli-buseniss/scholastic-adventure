@@ -43,8 +43,8 @@ export function ZelligeOrnament() {
             key={i}
             x1="200"
             y1="200"
-            x2={200 + 150 * Math.cos((i * Math.PI) / 6)}
-            y2={200 + 150 * Math.sin((i * Math.PI) / 6)}
+            x2={Math.round((200 + 150 * Math.cos((i * Math.PI) / 6)) * 100) / 100}
+            y2={Math.round((200 + 150 * Math.sin((i * Math.PI) / 6)) * 100) / 100}
           />
         ))}
       </g>
